@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -16,6 +17,8 @@ import java.text.SimpleDateFormat;
 public class SudokuMainFrame extends JFrame {
 
     private SudokuCanvers sudokuCanvers;
+
+    public static int pass = 1;
 
     public static long usedTime = 0;
 
@@ -111,14 +114,18 @@ public class SudokuMainFrame extends JFrame {
 }
 
 class ButtonFunction extends JButton {
-    public void addActionSaveGameListenser(JButton button) {
+    public void addActionSaveGameListenser(JButton button){
         button.addActionListener(event -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("."));
-            chooser.setFileFilter(new FileNameExtensionFilter("GameSave","bak"));
-            int result = chooser.showSaveDialog(this);
-            if (result == JFileChooser.SAVE_DIALOG) {
-                //todo 存储存档文件
+            chooser.setFileFilter(new FileNameExtensionFilter("GameSave", "bak"));
+            chooser.showSaveDialog(this);
+
+            String filename = chooser.getSelectedFile().getAbsolutePath();
+            try{
+                GameFiles.saveGame(filename);
+            }catch (IOException e){
+                e.printStackTrace();
             }
         });
     }
