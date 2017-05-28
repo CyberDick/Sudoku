@@ -1,7 +1,9 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 
 /**
  * Created by haotianliang on 17/05/2017.
@@ -34,6 +36,17 @@ public class WelcomeFrame extends JFrame {
 
     private void addLoadGameButton(JPanel panel) {
         JButton button = new JButton("载入游戏");
+        button.addActionListener(event -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File("."));
+            chooser.setFileFilter(new FileNameExtensionFilter("GameSave","bak"));
+            int result = chooser.showOpenDialog(this);
+            if(result == JFileChooser.APPROVE_OPTION){
+                //todo 读取存档文件
+
+            }
+
+        });
         panel.add(button);
     }
 
