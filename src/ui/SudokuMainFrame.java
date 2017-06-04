@@ -12,27 +12,29 @@ import java.text.SimpleDateFormat;
 
 /**
  * Created by haotianliang on 16/05/2017.
+ * Edited by hongzhiwen on 03/06/2017
  * Sudoku 游戏主界面
  */
 public class SudokuMainFrame extends JFrame {
 
     private SudokuCanvers sudokuCanvers;
 
-    public static int pass = 1;
-
+    private int blocks;
+    
     public static long usedTime = 0;
 
     public static Timer userTimeAction;
 
-    public SudokuMainFrame() {
-        init();
+    public SudokuMainFrame(int blocks) {
+    	this.blocks=blocks;
+    	init();
         addCanvers();
         addComponent();
     }
 
     private void addCanvers() {
 
-        sudokuCanvers = new SudokuCanvers();
+        sudokuCanvers = new SudokuCanvers(blocks);
         sudokuCanvers.setBorder(new TitledBorder("主游戏区"));
 
         this.add(sudokuCanvers, BorderLayout.CENTER);
@@ -57,7 +59,7 @@ public class SudokuMainFrame extends JFrame {
         JButton buttonAbandon = new JButton("放弃游戏");
         JButton buttonClear = new JButton("重新开始");
         JButton buttonCancel = new JButton("撤销操作");
-        ButtonFunction buttonFunction = new ButtonFunction();
+        ButtonFunction buttonFunction = new ButtonFunction(sudokuCanvers);
 
         buttonPanel.setLayout(new GridLayout(2, 2));
         buttonPanel.add(buttonCancel);
@@ -114,7 +116,14 @@ public class SudokuMainFrame extends JFrame {
 }
 
 class ButtonFunction extends JButton {
-    public void addActionSaveGameListenser(JButton button){
+    private SudokuCanvers sudokuCanvers;
+    
+	public ButtonFunction(SudokuCanvers sudokuCanvers){
+    	this.sudokuCanvers=sudokuCanvers;
+    }
+	
+	//保存游戏
+	public void addActionSaveGameListenser(JButton button){
         button.addActionListener(event -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("."));
@@ -128,5 +137,26 @@ class ButtonFunction extends JButton {
                 e.printStackTrace();
             }
         });
+    }
+    
+    //重新开始
+    public void addActionClearListener(JButton button){
+    	button.addActionListener(event -> {
+    		sudokuCanvers.clear();
+    	});
+    }
+    
+    
+    //撤销操作
+    public void addActionCancelListener(JButton button){
+    	button.addActionListener(event -> {
+    		sudokuCanvers.cancel();
+    	});
+    }
+    
+    //放弃游戏
+    public void addActionAbandonListener(JButton button){
+    	button.addActionListener(event -> {
+    	});
     }
 }

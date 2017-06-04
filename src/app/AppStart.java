@@ -5,6 +5,7 @@ import ui.WelcomeFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import src.Sudoku;
 
 /**
  * Created by haotianliang on 16/05/2017.
