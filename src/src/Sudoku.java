@@ -371,7 +371,8 @@ public class Sudoku {
      * 撤销操作
      */
     public void cancel(){
-    	Record record=History.pop();
+    	Record record=History.getLast();
+    	History.removeLast();
     	sudokuData[record.i][record.j]=record.org;
     }
     

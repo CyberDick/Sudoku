@@ -222,8 +222,10 @@ public class SudokuCanvers extends JPanel implements MouseListener {
      * 撤销操作
      */
     public void cancel(){
-    	SudokuHelper.cancel();
-    	refresh();
+		if (SudokuHelper.hasHistory()){
+			SudokuHelper.cancel();
+			refresh();
+		}    	
     }
     
     /*

@@ -68,6 +68,8 @@ public class SudokuMainFrame extends JFrame {
         buttonPanel.add(buttonAbandon);
 
         buttonFunction.addActionSaveGameListenser(buttonSave);
+        buttonFunction.addActionClearListener(buttonClear);
+        buttonFunction.addActionCancelListener(buttonCancel);
         panel.add(buttonPanel);
     }
 
@@ -148,10 +150,10 @@ class ButtonFunction extends JButton {
     
     
     //撤销操作
-    public void addActionCancelListener(JButton button){
+    public void addActionCancelListener(JButton button){		
     	button.addActionListener(event -> {
-    		sudokuCanvers.cancel();
-    	});
+			sudokuCanvers.cancel();
+		});  	
     }
     
     //放弃游戏
