@@ -54,7 +54,7 @@ public class SudokuMainFrame extends JFrame {
     private void addPanelFunction(JPanel panel) {
         JPanel buttonPanel = new JPanel();
         JButton buttonSave = new JButton("保存游戏");
-        JButton buttonAbandon = new JButton("放弃游戏");
+        JButton buttonQuit = new JButton("放弃游戏");
         JButton buttonClear = new JButton("重新开始");
         JButton buttonCancel = new JButton("撤销操作");
         ButtonFunction buttonFunction = new ButtonFunction();
@@ -63,9 +63,10 @@ public class SudokuMainFrame extends JFrame {
         buttonPanel.add(buttonCancel);
         buttonPanel.add(buttonClear);
         buttonPanel.add(buttonSave);
-        buttonPanel.add(buttonAbandon);
+        buttonPanel.add(buttonQuit);
 
         buttonFunction.addActionSaveGameListenser(buttonSave);
+        buttonFunction.addActionQuitGameListener(buttonQuit, this);
         panel.add(buttonPanel);
     }
 
@@ -114,7 +115,7 @@ public class SudokuMainFrame extends JFrame {
 }
 
 class ButtonFunction extends JButton {
-    public void addActionSaveGameListenser(JButton button){
+    public void addActionSaveGameListenser(JButton button) {
         button.addActionListener(event -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("."));
@@ -122,10 +123,25 @@ class ButtonFunction extends JButton {
             chooser.showSaveDialog(this);
 
             String filename = chooser.getSelectedFile().getAbsolutePath();
-            try{
+            try {
                 GameFiles.saveGame(filename);
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+    }
+
+    public void addActionQuitGameListener(JButton button, JFrame parentFrame) {
+        button.addActionListener(event -> {
+            int selection = JOptionPane.showConfirmDialog(parentFrame, "是否放弃游戏?",
+                    "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            if (selection == JOptionPane.OK_OPTION) {
+                JFrame frame = new WelcomeFrame();
+                frame.setSize(300, 270);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                parentFrame.dispose();
             }
         });
     }

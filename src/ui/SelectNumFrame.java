@@ -21,7 +21,7 @@ public class SelectNumFrame extends JDialog implements MouseListener {
         //隐藏界面上面的工具栏
         this.setUndecorated(true);
         this.setSize(150, 150);
-        this.setBackground(new Color(255, 204, 153, 123));
+        this.setBackground(new Color(100, 222, 255, 123));
         this.setLayout(null);
         addNum();
     }
